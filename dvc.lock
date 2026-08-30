@@ -1,0 +1,91 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python3 src/data_ingestion.py
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 394886fb754758326df0af643ff6233c
+      size: 1271
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 78a793d55c721bf15b4743fc870e9a16.dir
+      size: 724415
+      nfiles: 1
+  data_preprocessing:
+    cmd: python3 src/data_preprocessing.py
+    deps:
+    - path: data/raw/tweets.csv
+      hash: md5
+      md5: 625bc3a289b075178b8930dc79387114
+      size: 724415
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: b1a47618d046220fe02bfdbf77c5d39d
+      size: 1282
+    outs:
+    - path: data/interim/cleaned_tweets.csv
+      hash: md5
+      md5: 2d41947fa50af7f16e087545ed2be6c8
+      size: 1280211
+  feature_engineering:
+    cmd: python3 src/feature_engineering.py
+    deps:
+    - path: data/interim/cleaned_tweets.csv
+      hash: md5
+      md5: 2d41947fa50af7f16e087545ed2be6c8
+      size: 1280211
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 5c7d92d7d0a91849793aa1c1393e1865
+      size: 1801
+    outs:
+    - path: data/processed/test_data.pkl
+      hash: md5
+      md5: f10b10e6185cf31b070f6e5866cb34b0
+      size: 145129
+    - path: data/processed/tfidf_vectorizer.pkl
+      hash: md5
+      md5: b29e8854d0507b018ecba03a9dfa3355
+      size: 180981
+    - path: data/processed/train_data.pkl
+      hash: md5
+      md5: d0fee781f9dd39565b768791029919a9
+      size: 620731
+  model_building:
+    cmd: python3 src/model_building.py
+    deps:
+    - path: data/processed/train_data.pkl
+      hash: md5
+      md5: d0fee781f9dd39565b768791029919a9
+      size: 620731
+    - path: src/model_building.py
+      hash: md5
+      md5: c262763e3f88bbb095b9d5a61a99e3a2
+      size: 1086
+    outs:
+    - path: models/sentiment_model.pkl
+      hash: md5
+      md5: 694bdbd74f18c8d90848f2bc949ecb05
+      size: 40669
+  model_evaluation:
+    cmd: python3 src/model_evaluation.py
+    deps:
+    - path: data/processed/test_data.pkl
+      hash: md5
+      md5: f10b10e6185cf31b070f6e5866cb34b0
+      size: 145129
+    - path: models/sentiment_model.pkl
+      hash: md5
+      md5: 694bdbd74f18c8d90848f2bc949ecb05
+      size: 40669
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: f74f3f64e191041edbe76031d5803616
+      size: 1861
+    outs:
+    - path: metrics/scores.json
+      hash: md5
+      md5: 94a92113d6c40f471d17ca06afcf18f4
+      size: 120
