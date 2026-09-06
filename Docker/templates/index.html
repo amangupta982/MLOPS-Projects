@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Basic Calculator</h1>
+        <form action="/math" method="POST">
+            <input type="number" step="any" name="num1" placeholder="Enter first number" required>
+            <select name="operation">
+                <option value="add">Add</option>
+                <option value="subtract">Subtract</option>
+                <option value="multiply">Multiply</option>
+                <option value="divide">Divide</option>
+            </select>
+            <input type="number" step="any" name="num2" placeholder="Enter second number" required>
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+</body>
+</html>
