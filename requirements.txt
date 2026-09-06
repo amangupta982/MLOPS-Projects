@@ -3,3 +3,5 @@ nltk
 scikit-learn
 mlflow
 dagshub
+Flask
+gunicorn
